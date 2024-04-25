@@ -1,7 +1,6 @@
 const { User, Thought } = require('../models');
 
 const thoughtController = {
-    //get all thoughts
     getThoughts(req, res) {
         Thought.find()
             .populate({
@@ -11,7 +10,6 @@ const thoughtController = {
             .then((thoughts) => res.json(thoughts))
             .catch((err) => res.status(500).json(err));
     },
-    //get one thought by id
     getSingleThought(req, res) {
         Thought.findOne({ _id: req.params.thoughtId })
             .select('-__v')
@@ -26,7 +24,6 @@ const thoughtController = {
             )
             .catch((err) => res.status(500).json(err));
     },
-    // create a new thought
     createThought(req, res) {
         console.log(req.body);
         Thought.create(req.body)
@@ -46,7 +43,6 @@ const thoughtController = {
             })
     },
 
-    //update a thought
     updateThought(req, res) {
         Thought.findOneAndUpdate(
             { _id: req.params.thoughtId },
@@ -64,7 +60,6 @@ const thoughtController = {
             }
             )
     },
-    //delete a thought 
     deleteThought(req, res) {
         Thought.findOneAndDelete({ _id: req.params.thoughtId })
             .then((thought) => {
@@ -80,7 +75,7 @@ const thoughtController = {
             })
             .then(userData => {
                 if (!userData) {
-                    res.status(404).json({ message: 'No User found with this id but thought deleted!' });
+                    res.status(404).json({ message: 'thought deleted!' });
                     return;
                 }
                 res.json(userData);
@@ -88,7 +83,6 @@ const thoughtController = {
             .catch(err => res.json(err));
     },
 
-    //add reactions
     addReaction(req, res) {
         Thought.findOneAndUpdate(
             { _id: req.params.thoughtId },
@@ -109,7 +103,6 @@ const thoughtController = {
             )
     },
 
-    //delete reaction
     deleteReaction({ params }, res) {
         Thought.findOneAndUpdate(
             { _id: params.thoughtId },

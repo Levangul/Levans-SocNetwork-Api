@@ -17,6 +17,11 @@ const reactionSchema = new Schema(
             type: String,
             required: true,
         },
+        createdAt: {
+            type: Date,
+            default: Date.now,
+            get: (timestamp) => timestamp.toLocaleDateString(),
+        },
     },
     {
         toJSON: {
@@ -40,8 +45,14 @@ const thoughtSchema = new Schema(
             type: String,
             required: true,
         },
+        createdAt: {
+            type: Date,
+            default: Date.now,
+            get: (timestamp) => timestamp.toLocaleDateString(),
+        },
         reactions: [reactionSchema],
     },
+
     {
 
         toJSON: {
